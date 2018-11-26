@@ -4,7 +4,7 @@
 
 1. docker build -t crack/elk .
 
-2. docker run --rm -p 5601:5601 -p 9200:9200 -p 5044:5044 -v /home/elk-crack-data:/var/lib/elasticsearch --name elkc crack/elk
+2. docker run --rm -d -p 5601:5601 -p 9200:9200 -p 5044:5044 -v /home/elk-crack-data:/var/lib/elasticsearch --name elkc crack/elk
 
 3. visit http://elk:5601/app/kibana#/dev_tools/console?_g=()
    
