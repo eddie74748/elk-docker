@@ -125,6 +125,7 @@ RUN cp ${ES_HOME}/config/log4j2.properties ${ES_HOME}/config/jvm.options \
  && chmod -R +r ${ES_PATH_CONF}
 
 ### configure Logstash
+ADD ./logstash.yml ${LOGSTASH_HOME}/config/logstash.yml
 
 # certs/keys for Beats and Lumberjack input
 RUN mkdir -p /etc/pki/tls/certs && mkdir /etc/pki/tls/private
