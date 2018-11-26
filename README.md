@@ -33,6 +33,39 @@
 
 6. visit http://elk:5601/app/kibana#/management/logstash/pipelines/?_g=()
    
-   create pipeline
+   create pipeline (id: main) .i.g 
+   
+   input {
+  beats {
+    port => 5044
+    ssl => true
+    ssl_certificate => "/etc/pki/tls/certs/logstash-beats.crt"
+    ssl_key => "/etc/pki/tls/private/logstash-beats.key"
+  }
+}
+filter {
+    grok {
+        match => { "message" => "\(%{TIMESTAMP_ISO8601:time}\)\[%{LOGLEVEL:log_level}\]\[%{NUMBER:pid}-%{WORD:tid}\](?<msg>(.*))\[(?<file>(.*))\]:%{NUMBER:line}" }
+        remove_field => ["offset", "message", "tags", "input", "prospector", "beat", "host", "@version"]
+    }
+    date {
+        match => ["time", "yyyy-MM-dd HH:mm:ss.SSS"]
+        remove_field => ["time"]
+        timezone => "Asia/Shanghai"
+    }
+    mutate {
+        add_field => { "[@metadata][index]" => "filebeat" }
+    }
+}
+output {
+    elasticsearch {
+        hosts => ["localhost"]
+        manage_template => false
+        index => "%{[@metadata][index]}-%{+YYYY.MM.dd}"
+        document_type => "%{[@metadata][type]}"
+        user => "elastic"
+        password => "gogogo"
+  }
+}
    
 7. done
