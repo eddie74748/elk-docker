@@ -1,131 +1,38 @@
-# Elasticsearch, Logstash, Kibana (ELK) Docker image
-
-[![](https://images.microbadger.com/badges/image/sebp/elk.svg)](https://microbadger.com/images/sebp/elk "Get your own image badge on microbadger.com") [![Documentation Status](https://readthedocs.org/projects/elk-docker/badge/?version=latest)](http://elk-docker.readthedocs.io/?badge=latest)
-
-This Docker image provides a convenient centralised log server and log management web interface, by packaging Elasticsearch, Logstash, and Kibana, collectively known as ELK.
-
-### Documentation
-
-See the [ELK Docker image documentation web page](http://elk-docker.readthedocs.io/) for complete instructions on how to use this image.
-
-### Docker Hub
-
-This image is hosted on Docker Hub at [https://hub.docker.com/r/sebp/elk/](https://hub.docker.com/r/sebp/elk/).
-
-The following tags are available:
-
-- `latest`, `642`: ELK 6.4.2.
-
-- `641`: ELK 6.4.1.
-
-- `640`: ELK 6.4.0.
-
-- `632`: ELK 6.3.2.
-
-- `631`: ELK 6.3.1.
-
-- `630`: ELK 6.3.0.
-
-- `624`: ELK 6.2.4.
-
-- `623`: ELK 6.2.3.
-
-- `622`: ELK 6.2.2.
-
-- `621`: ELK 6.2.1.
-
-- `620`: ELK 6.2.0.
-
-- `613`: ELK 6.1.3.
-
-- `612`: ELK 6.1.2.
-
-- `611`: ELK 6.1.1.
-
-- `610`: ELK 6.1.0.
-
-- `601`: ELK 6.0.1.
-
-- `600`: ELK 6.0.0.
-
-- `568`: ELK 5.6.8.
-
-- `564`: ELK 5.6.4.
-
-- `563`: ELK 5.6.3.
-
-- `562`: ELK 5.6.2.
-
-- `561`: ELK 5.6.1.
-
-- `560`: ELK 5.6.0.
-
-- `553`: ELK 5.5.3.
-
-- `552`: ELK 5.5.2.
-
-- `551`: ELK 5.5.1.
-
-- `550`: ELK 5.5.0.
-
-- `543`: ELK 5.4.3.
-
-- `542`: ELK 5.4.2.
-
-- `541`: ELK 5.4.1.
-
-- `540`: ELK 5.4.0.
-
-- `532`: ELK 5.3.2.
-
-- `531`: ELK 5.3.1.
-
-- `530`: ELK 5.3.0.
-
-- `522`: ELK 5.2.2.
-
-- `521`: ELK 5.2.1.
-
-- `520`: ELK 5.2.0.
-
-- `512`: ELK 5.1.2.
-
-- `511`: ELK 5.1.1.
-
-- `502`: ELK 5.0.2.
-
-- `es501_l501_k501`: ELK 5.0.1.
-
-- `es500_l500_k500`: ELK 5.0.0.
-
-- `es241_l240_k461`: Elasticsearch 2.4.1, Logstash 2.4.0, and Kibana 4.6.1.
-
-- `es240_l240_k460`: Elasticsearch 2.4.0, Logstash 2.4.0, and Kibana 4.6.0.
-
-- `es235_l234_k454`: Elasticsearch 2.3.5, Logstash 2.3.4, and Kibana 4.5.4.
-
-- `es234_l234_k453`: Elasticsearch 2.3.4, Logstash 2.3.4, and Kibana 4.5.3.
-
-- `es234_l234_k452`: Elasticsearch 2.3.4, Logstash 2.3.4, and Kibana 4.5.2.
-
-- `es233_l232_k451`: Elasticsearch 2.3.3, Logstash 2.3.2, and Kibana 4.5.1.
-
-- `es232_l232_k450`: Elasticsearch 2.3.2, Logstash 2.3.2, and Kibana 4.5.0.
-
-- `es231_l231_k450`: Elasticsearch 2.3.1, Logstash 2.3.1, and Kibana 4.5.0.
-
-- `es230_l230_k450`: Elasticsearch 2.3.0, Logstash 2.3.0, and Kibana 4.5.0.
-
-- `es221_l222_k442`: Elasticsearch 2.2.1, Logstash 2.2.2, and Kibana 4.4.2.
-
-- `es220_l222_k441`: Elasticsearch 2.2.0, Logstash 2.2.2, and Kibana 4.4.1.
-
-- `es220_l220_k440`: Elasticsearch 2.2.0, Logstash 2.2.0, and Kibana 4.4.0.
-
-- `E1L1K4`: Elasticsearch 1.7.3, Logstash 1.5.5, and Kibana 4.1.2.
-
-**Note** – See the documentation page for more information on pulling specific combinations of versions of Elasticsearch, Logstash and Kibana.
-
-### About
-
-Written by [Sébastien Pujadas](https://pujadas.net), released under the [Apache 2 license](https://www.apache.org/licenses/LICENSE-2.0).
+# Elasticsearch, Logstash, Kibana (ELK) Docker image with x-pack
+
+### USAGE
+
+1. docker build -t crack/elk .
+
+2. docker run --rm -p 5601:5601 -p 9200:9200 -p 5044:5044 -v /home/elk-crack-data:/var/lib/elasticsearch --name elkc crack/elk
+
+3. visit http://elk:5601/app/kibana#/dev_tools/console?_g=()
+   
+   POST _xpack/license
+{
+  "license": {
+    "uid": "b5dccd00-b476-4b69-8763-cf22fc136822",
+    "type": "platinum",
+    "issue_date_in_millis": 1541462400000,
+    "expiry_date_in_millis": 2855980923000,
+    "max_nodes": 100,
+    "issued_to": "li qq (dahe)",
+    "issuer": "Web Form",
+    "signature": "AAAAAwAAAA0ys5CCV21m9ZmWGtrlAAABmC9ZN0hjZDBGYnVyRXpCOW5Bb3FjZDAxOWpSbTVoMVZwUzRxVk1PSmkxaktJRVl5MUYvUWh3bHZVUTllbXNPbzBUemtnbWpBbmlWRmRZb25KNFlBR2x0TXc2K2p1Y1VtMG1UQU9TRGZVSGRwaEJGUjE3bXd3LzRqZ05iLzRteWFNekdxRGpIYlFwYkJiNUs0U1hTVlJKNVlXekMrSlVUdFIvV0FNeWdOYnlESDc3MWhlY3hSQmdKSjJ2ZTcvYlBFOHhPQlV3ZHdDQ0tHcG5uOElCaDJ4K1hob29xSG85N0kvTWV3THhlQk9NL01VMFRjNDZpZEVXeUtUMXIyMlIveFpJUkk2WUdveEZaME9XWitGUi9WNTZVQW1FMG1DenhZU0ZmeXlZakVEMjZFT2NvOWxpZGlqVmlHNC8rWVVUYzMwRGVySHpIdURzKzFiRDl4TmM1TUp2VTBOUlJZUlAyV0ZVL2kvVk10L0NsbXNFYVZwT3NSU082dFNNa2prQ0ZsclZ4NTltbU1CVE5lR09Bck93V2J1Y3c9PQAAAQAC/v5fLuwsjo419HowJT/4JK4a9/O0ejYR6gvwR2Ss0EgfGkLawQCiMyW6Z0hZtGRgWLZ4/kDL9JBRBD0Mc4KL+uHty8keBDLC+vzHmEEBezI/AWiRyDTt1yq7F9X8GsbgnzkjccnmnkSopHxa3AQfKPjNm4uFdV01d5ud3gZy+vRfY43RsB0QIyC9E/LTBb/+M6gTYWwzuck+InNK3XPK5zU1ouMnWCnFHb97pPNIA6MiNG2x4ekekTA5aJtd7q+9BGhP7srFK6Itywcrh2uJ1bn2yFF8QSRWmP7z3BD+ddBdp4y1Sn597ld61zh2G9rF1sct2nYKeWh4Ctm11tvu",
+    "start_date_in_millis": 1541462400000
+  }
+}
+
+4. docker exec -it /bin/bash 
+   
+   /opt/elasticsearch/bin/elasticsearch-setup-passwords interactive
+   
+   enter passwords: gogogo
+   
+5. restart elk as step 2
+
+6. visit http://elk:5601/app/kibana#/management/logstash/pipelines/?_g=()
+   
+   create pipeline
+   
+7. done
