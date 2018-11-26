@@ -52,7 +52,7 @@ ENV ES_PATH_CONF /etc/elasticsearch
 ENV ES_PATH_BACKUP /var/backups
 
 RUN mkdir ${ES_HOME} \
- && curl -O https://artifacts.elastic.co/downloads/elasticsearch/${ES_PACKAGE} \
+ && curl -O http://172.19.197.110:8080/download/${ES_PACKAGE} \
  && tar xzf ${ES_PACKAGE} -C ${ES_HOME} --strip-components=1 \
  && rm -f ${ES_PACKAGE} \
  && groupadd -r elasticsearch -g ${ES_GID} \
@@ -76,7 +76,7 @@ ENV LOGSTASH_PATH_CONF /etc/logstash
 ENV LOGSTASH_PATH_SETTINGS ${LOGSTASH_HOME}/config
 
 RUN mkdir ${LOGSTASH_HOME} \
- && curl -O https://artifacts.elastic.co/downloads/logstash/${LOGSTASH_PACKAGE} \
+ && curl -O http://172.19.197.110:8080/download/${LOGSTASH_PACKAGE} \
  && tar xzf ${LOGSTASH_PACKAGE} -C ${LOGSTASH_HOME} --strip-components=1 \
  && rm -f ${LOGSTASH_PACKAGE} \
  && groupadd -r logstash -g ${LOGSTASH_GID} \
@@ -98,7 +98,7 @@ ENV KIBANA_GID 993
 ENV KIBANA_UID 993
 
 RUN mkdir ${KIBANA_HOME} \
- && curl -O https://artifacts.elastic.co/downloads/kibana/${KIBANA_PACKAGE} \
+ && curl -O http://172.19.197.110:8080/download/${KIBANA_PACKAGE} \
  && tar xzf ${KIBANA_PACKAGE} -C ${KIBANA_HOME} --strip-components=1 \
  && rm -f ${KIBANA_PACKAGE} \
  && groupadd -r kibana -g ${KIBANA_GID} \
@@ -125,6 +125,8 @@ RUN cp ${ES_HOME}/config/log4j2.properties ${ES_HOME}/config/jvm.options \
  && chmod -R +r ${ES_PATH_CONF}
 
 ### configure Logstash
+
+ADD ./logstash.yml ${LOGSTASH_HOME}/config/logstash.yml
 
 # certs/keys for Beats and Lumberjack input
 RUN mkdir -p /etc/pki/tls/certs && mkdir /etc/pki/tls/private
